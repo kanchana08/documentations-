@@ -1,0 +1,179 @@
+[] apt get update
+[] apt install nginx/vim...
+[] vim/etc/hostname--> to change the server 
+[] > filename --> to detete content of file 
+[] always we make directory in / folder only (cd /)
+[] vm virtualbox --->tool normaly we use in that ubuntu 
+
+[]docker rmi $(docker images –aq)-->for imagges
+[]docker stop $(docker ps –aq) 
+This command is used to delete all container from local storage 
+[] docker stop $(docker ps –aq) 
+
+
+docker -- is the open platform to develop and running our application
+curl https://get.docker.com|dash-->fot downloading docker
+[]docker pull nginx:latest--->to pull the images 
+[]docker images -->to cheack the images
+[]docker rum --rm -dit --name nginx -p 8099:80 imagesid --> to run the images/ this command used to build the container using images
+-it is short for --interactive + --tty. When you docker run with this command it takes you straight inside the container.
+-d is short for --detach, which means you just run the container and then detach from it. Essentially, you run container in the background
+[]docker ps -->to cheack the container
+to cheack the container images--> localhost:8099(port number)or 127.0.0.1
+[] docker exec --it containerid /bin/bash --> for moving inside the container
+--->after exec the container we are inside the container next is 
+[] cd /usr/share/nginx/html
+[]ls
+50x.html index.html
+[] cat index.html---> to cheack the image code  
+[] vim index.html -->  we can modified the code however we want and go to server restart you get ur html code 
+--> if you faile give this command [] docker restart nginx 
+[]ctrl+p+q -->to existing the container
+[] ctrl+p+q--->to exit the container
+[] docker rm -f containerid---> remove the container
+[] docker rmi imageid
+[]docker system prune -a -->removed unused container and images
+
+[] docker rm -f containerid --> to remove the container forceable 
+----------------------------------------------------------------------------------------
+
+
+DOCKER FILE:-instruction to build the images *** using vim Dockerfile using this we can installthe command 
+[]mkdir practies
+[]ls
+[]touch f1,f2,t1,t4
+[]vim .dockerignore --->to ignore the file 
+-*--> delete file started with - 
+*- -->ended with -
+f*
+*f
+[]ls
+[]vim Dockerfile (D is biglatter )
+FROM python:3.8
+RUN mkdir app
+WORKDIR app
+copy 
+:wq! -->for save and exit :q-->for exit
+[] docker index.html-->write code what we display (w3school html) 
+[]docker build -t dft/fe:v1 .
+[]docker images
+ []docker run --rm -dit --name hhytht(name whatever) -p 4543:80 imageid /bin/bash
+ []docker ps
+ []docker exec -it containerid /bin/bash
+ []ls --> cheack ignore files 
+ docker system prune -a --> remove the unused images and container
+ 
+ 
+ DOCKER HUB
+[]docker login
+[]usename
+[]password 
+
+
+ :(thise for nginx)
+ []mkdir practies
+ []vim index.html
+ FORM nginx
+ COPY index.html/urs/share/nginx/html
+ RUN MKDIR app
+ WORKDIR app
+ copy ..
+ [][]docker build -t dft/fe:v1 .
+[]docker images
+ []docker run --rm -dit --name hhytht(name whatever)--hostname kjdkd (whatever) -p 4543:80 imageid /bin/bash
+[]docker ps
+ []docker exec -it containerid /bin/bash
+ [] sevice nginx start / systemctl start nginx.service
+ []docker ps
+ [] docker commit containerid dockerhubname/projectename:v1(tag)
+ []docker push dockerhubname/projectename:v1
+ check the hub
+ []docker pull dockerhubname/projectename:v1---it downloading
+
+FOR apache (httpd)
+[]vim dockerfile 
+FORM index.html /urs/local/apache2/htdocs/
+RUN mkdir /app
+WORKDIR /app
+copy . .
+
+DOCKER volume :- Volume used for back up purpose 
+
+[]docker volume create filename
+[]docker volume ls
+driver      volume name 
+local        DEV01
+[] cd /var/lib/docker/volumes/
+[]ls
+[]cd DEV01
+[]ls
+[]cd -data empty -->folder 
+[] cd practies ---. in this folder we have some folder (ro we just create some folder ) including Dockerfile and index.html (vim Dockerfile
+                                                                                                                            FROM ubuntu:latest
+[]docker build -t fgfd/klf:v1                                                                                                RUN MKDIR /app1
+[]docker images                                                                                                              WORKDIR /app1
+[] docker rum -dit -v DEV01(volumename):/app1(pwd)  -p 7687:80 imageid                                                      COPY ..
+[] docker ps 
+[] docker exec -it containerid /bin/bash
+[] ls ---> all practies folder files copy to app1 folder--> if we give wronge pwd it create one more path
+
+[] docker run --rm -dit --name fdfd --hostname dsrd --mount source=myvl,target=/app2 -p 7657:80 imageid /bin/bash-----> using mount we can run the container
+
+
+
+DOCKER NETWORK: using network 2 container communicate easily (ex to check frontend backend communicate)
+[]docker network create new 
+[]docker network ls
+NETWORKid    NAME   DRIVE   SCOPE 
+32245         new    bridge  local
+                     host 
+					 null
+[]docker run --rm -dit --name s1 -p 4554:80 imageid /bin/bash
+[]docker ps
+[]docker network connect dockernetwork containerid
+[]docker exec -it containerid ping cotainerid 	
+
+
+-->we always depends on container name only 
+-->always we use bridge network only 
+
+ []docker run --rm -dit --name s1 --network host -p 4554:80 imageid /bin/bash
+--> if we use host we didn't get port number in container list  
+cotainerid      images     command     cteated      status     port      name
+2635653621        56576578   bin/bash    3min        up 3min              s1
+
+FROM ubuntu:latest
+RUN apt -get update -y && apt -get install iputils-ping -y
+RUN MKDIR /app1
+
+
+
+
+DOCKER compose:using this we can run the multiple applications in single compose 
+https://docs.docker.com/compose/gettingstarted/ ---->follow the link 
+[] mkdir 
+[]apt install docker-compose 
+[]docker compose up --->to run the compose 
+[]docker compose down -->to stop the compose 
+to pull the compose into github
+[]git remote add origin githubrep https(what we create in github)
+[]git push git git https
+   []uresname
+   []password
+   
+   
+   
+   docker swarm:   main reson in if we use docker if container stop we loss application,if use swarm thong here 
+   we use 3 or more container so one container fail remaing container store the contente and one act as master 
+[] docker info --> to check swarm status
+ [] docker swarm inti ----> it show the swarm ststus
+ [] docker node ls 
+ [] docker node promote hostname 
+ 
+ 
+ [] dockere service create -d -p -name web --replicas 5 nginx:latest /bin/bash
+ []docker service ls
+ [] docker service ps web-----> it show container ready
+ [] docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock dockersamples/visualizer
+ after this check in 8080 
+   
