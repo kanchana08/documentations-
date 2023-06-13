@@ -1,0 +1,37 @@
+pipeline{
+    agent any
+    stages{
+        stage('checkout') {
+            steps {
+                
+                
+               git credentialsId: 'GITPATH', url: 'https://github.com/kanchana08/practice.git'
+               
+        }
+        
+     
+    }
+    stage('change'){
+        steps{
+            sh 'cd /var/lib/jenkins/workspace/git && git checkout master '
+        }
+    }
+    
+       stage('commit and push') {
+           steps{
+               sh 'cd /var/lib/jenkins/workspace/git && git add . && git commit -m "ddtafzytafz" '
+           }
+       }
+       stage('git push') {
+    steps {
+        withCredentials([
+            gitUsernamePassword(credentialsId: 'GITPATH', url: 'https://github.com/kanchana08/practice.git', gitToolName: 'Default')
+        ]) {
+            sh "git push --set-upstream origin master"
+        }
+    }
+}  
+        
+    }
+
+}
