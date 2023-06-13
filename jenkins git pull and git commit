@@ -19,7 +19,7 @@ pipeline{
     
        stage('commit and push') {
            steps{
-               sh 'cd /var/lib/jenkins/workspace/git && git add . && git commit -m "ddtafzytafz" '
+               sh 'cd /var/lib/jenkins/workspace/git && git add . && git commit -m ddtafzytafz || true'
            }
        }
        stage('git push') {
