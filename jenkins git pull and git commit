@@ -35,3 +35,33 @@ pipeline{
     }
 
 }
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+pipeline{
+    agent any
+    stages{
+        stage('change'){
+        steps{
+            sh 'cd /var/lib/jenkins/workspace/git && git checkout master && git merge master'
+        }
+    }
+    
+       stage('commit and push') {
+           steps{
+               sh ' git add . && git commit -m ddtafzytafz || true'
+           }
+       }
+       stage('git push') {
+    steps {
+        withCredentials([
+            gitUsernamePassword(credentialsId: 'GITPATH', url: 'https://github.com/kanchana08/practice.git', gitToolName: 'Default')
+        ]) {
+            sh "git push --set-upstream origin master"
+        }
+    }
+}  
+        
+    }
+
+}
