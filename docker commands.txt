@@ -54,7 +54,7 @@ RUN mkdir app
 WORKDIR app
 copy 
 :wq! -->for save and exit :q-->for exit
-[] docker index.html-->write code what we display (w3school html) 
+[] vim index.html-->write code what we display (w3school html) 
 []docker build -t dft/fe:v1 .
 []docker images
  []docker run --rm -dit --name hhytht(name whatever) -p 4543:80 imageid /bin/bash
