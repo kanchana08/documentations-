@@ -1,0 +1,23 @@
+create file with extension of .sh  (example: run.sh)
+ 
+add content accordingly by changing pythonfilenames i have to run test.py and test1.py files
+ 
+vi script.sh
+--------------------------------------------------------------------------------------
+ 
+#!/bin/bash
+ 
+exec python3 test.py &
+ 
+exec python3 test1.py
+-----------------------------------------------------------------------------------------------------
+-----------------------------
+Dockerfile by mentioning file permissions and inside CMD mention this script name
+ 
+From python:latest
+WORKDIR /app
+COPY . .
+RUN chmod 777 /app/script.sh
+CMD ["./script.sh"]
+------------------------------------------------------
+build image and run container , you can run two .py files inside container
